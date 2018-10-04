@@ -8,11 +8,15 @@ A simple site structure, with gulp script to:
 * build javascript from typescript
 * dev and prod enviroments
 
-# Install
+# Requirements: 
+* node.js (install from)
+* gulp (install with npm install -g gulp)
 
-* npm install -g gulp
+#How to use
+
+* Clone repository 
 * npm install
-* gulp build
-* gulp watch
 
 # Run
+
+gulp build --env [dev | prod]
