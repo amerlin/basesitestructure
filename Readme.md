@@ -8,6 +8,8 @@ A simple site structure, with gulp script to:
 * build javascript from typescript
 * dev and prod enviroments
 
+Useful for single page javascript/css destination page. 
+
 # Requirements: 
 * node.js (install from)
 * gulp (install with npm install -g gulp)
@@ -16,6 +18,16 @@ A simple site structure, with gulp script to:
 
 * Clone repository 
 * npm install
+
+src folder contents: 
+* fonts: fonts css definitions
+* scss: sass src file
+* ts: typescript src file
+
+dist folder contents: 
+* fonts: destination fonts css definitions
+* maps: map generated from typescripyt
+* index.html: single page html 
 
 # Run
 
