@@ -11,6 +11,7 @@ var util = require('gulp-util');
 var runSequence = require('run-sequence');
 var merge = require('merge-stream');
 var del = require('del');
+var replace = require('gulp-replace');
 
 // config files
 
@@ -97,6 +98,21 @@ gulp.task('clean', function() {
   getEnv();
   return del.sync(env.clean);
 });
+
+gulp.task('minifyref', function(){
+  gulp.src(['./site/dist/index.html'])
+    .pipe(replace('site.js', 'site.min.js'))
+    .pipe(replace('site.css', 'site.min.css'))
+    .pipe(gulp.dest('./site/dist'));
+});
+
+gulp.task('deminifyref', function(){
+  gulp.src(['./site/dist/index.html'])
+    .pipe(replace('site.min.js', 'site.js'))
+    .pipe(replace('site.min.css', 'site.css'))
+    .pipe(gulp.dest('./site/dist'));
+});
+
 
 gulp.task('build', function(callback) {
   getEnv();
