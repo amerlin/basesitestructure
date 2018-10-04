@@ -1,0 +1,68 @@
+{
+  "dev": {
+    "typescript": {
+      "src": "site/src/ts/**/*.ts",
+      "outDir": "site/dist/js",
+      "outExt": ".js",
+      "minify": false,
+      "sourceMaps": {
+        "use": true,
+        "external": false,
+        "externalRelDir": "",
+        "externalURLPrefix": ""
+      }
+    },
+    "sass": {
+      "src": "site/src/scss/**/*.scss",
+      "outDir": "site/dist/css",
+      "outExt": ".css",
+      "minify": false,
+      "sourceMaps": {
+        "use": true,
+        "external": false,
+        "externalRelDir": "",
+        "externalURLPrefix": ""
+      }
+    },
+    "assets": [
+      {
+        "src": "site/src/fonts/**/*",
+        "outDir": "site/dist/fonts"
+      }
+    ],
+    "clean": ["site/dist/css/*", "site/dist/js/*"]
+  },
+  "prod": {
+    "typescript": {
+      "src": "site/src/ts/**/*.ts",
+      "outDir": "site/dist/js",
+      "outExt": ".js",
+      "minify": true,
+      "sourceMaps": {
+        "use": true,
+        "external": true,
+        "externalRelDir": "../maps/js",
+        "externalURLPrefix": ""
+      }
+    },
+    "sass": {
+      "src": "site/src/scss/**/*.scss",
+      "outDir": "site/dist/css",
+      "outExt": ".css",
+      "minify": true,
+      "sourceMaps": {
+        "use": true,
+        "external": true,
+        "externalRelDir": "../maps/css",
+        "externalURLPrefix": ""
+      }
+    },
+    "assets": [
+      {
+        "src": "site/src/fonts/**/*",
+        "outDir": "site/dist/fonts"
+      }
+    ],
+    "clean": ["site/dist/css/*", "site/dist/js/*"]
+  }
+}
