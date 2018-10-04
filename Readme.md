@@ -1,5 +1,5 @@
 
-Base Site Structure
+Basic Site Structure
 ===================
 
 A simple site structure, with gulp script to: 
