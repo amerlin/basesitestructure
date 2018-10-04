@@ -20,3 +20,7 @@ A simple site structure, with gulp script to:
 # Run
 
 gulp build --env [dev | prod]
+
+# Note
+
+If env is set to "prod" javascript and css are minify, but destination file not have .min suffix.
