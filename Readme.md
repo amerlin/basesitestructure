@@ -4,10 +4,10 @@ Base Site Structure
 
 A simple site structure, with gulp script to: 
 
-build css from sass
-build javascript from typescript
+* build css from sass
+* build javascript from typescript
 
-
+# Install
 
 
 npm install -g gulp
