@@ -37,6 +37,7 @@
       "src": "site/src/ts/**/*.ts",
       "outDir": "site/dist/js",
       "outExt": ".js",
+      "outMinExt": ".min.js",
       "minify": true,
       "sourceMaps": {
         "use": true,
@@ -49,6 +50,7 @@
       "src": "site/src/scss/**/*.scss",
       "outDir": "site/dist/css",
       "outExt": ".css",
+      "outMinExt": ".min.css",
       "minify": true,
       "sourceMaps": {
         "use": true,

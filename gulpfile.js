@@ -12,6 +12,7 @@ var runSequence = require('run-sequence');
 var merge = require('merge-stream');
 var del = require('del');
 var replace = require('gulp-replace');
+var rename = require('gulp-rename');
 
 // config files
 
@@ -56,6 +57,7 @@ gulp.task('ts', function() {
     .pipe(tsProject())
     .pipe(gulpIf(env.typescript.minify, uglify()))
     .pipe(rename({extname: env.typescript.outExt}))
+    .pipe(gulpIf(env.typescript.minify, rename({extname: env.typescript.outMinExt})))
     .pipe(gulpIf(env.typescript.sourceMaps.use, sourcemaps.write(
       env.typescript.sourceMaps.external ? env.typescript.sourceMaps.externalRelDir : null,
       env.typescript.sourceMaps.external ? {
@@ -73,13 +75,16 @@ gulp.task('sass', function() {
     .pipe(sass().on('error', sass.logError))
     .pipe(gulpIf(env.sass.minify, cssnano()))
     .pipe(rename({extname: env.sass.outExt}))
+    .pipe(gulpIf(env.sass.minify, rename({extname: env.sass.outMinExt})))
     .pipe(gulpIf(env.sass.sourceMaps.use, sourcemaps.write(
       env.sass.sourceMaps.external ? env.sass.sourceMaps.externalRelDir : null,
       env.sass.sourceMaps.external ? {
         sourceMappingURLPrefix: env.sass.sourceMaps.externalURLPrefix
       } : null
     )))
+    // .pipe(gulpIf(env.sass.minify, rename(ex)))
     .pipe(gulp.dest(env.sass.outDir));
+    
 });
 
 gulp.task('assets', function() {
@@ -99,14 +104,14 @@ gulp.task('clean', function() {
   return del.sync(env.clean);
 });
 
-gulp.task('minifyref', function(){
+gulp.task('minifyhtmlref', function(){
   gulp.src(['./site/dist/index.html'])
     .pipe(replace('site.js', 'site.min.js'))
     .pipe(replace('site.css', 'site.min.css'))
     .pipe(gulp.dest('./site/dist'));
 });
 
-gulp.task('deminifyref', function(){
+gulp.task('deminifyhtmlref', function(){
   gulp.src(['./site/dist/index.html'])
     .pipe(replace('site.min.js', 'site.js'))
     .pipe(replace('site.min.css', 'site.css'))
