@@ -104,14 +104,14 @@ gulp.task('clean', function() {
   return del.sync(env.clean);
 });
 
-gulp.task('minifyhtmlref', function(){
+gulp.task('jsrefreplace', function(){
   gulp.src(['./site/dist/index.html'])
     .pipe(replace('site.js', 'site.min.js'))
     .pipe(replace('site.css', 'site.min.css'))
     .pipe(gulp.dest('./site/dist'));
 });
 
-gulp.task('deminifyhtmlref', function(){
+gulp.task('jsminrefreplace', function(){
   gulp.src(['./site/dist/index.html'])
     .pipe(replace('site.min.js', 'site.js'))
     .pipe(replace('site.min.css', 'site.css'))
