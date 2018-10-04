@@ -14,3 +14,5 @@ A simple site structure, with gulp script to:
 * npm install
 * gulp build
 * gulp watch
+
+# Run
