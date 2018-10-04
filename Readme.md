@@ -12,7 +12,7 @@ A simple site structure, with gulp script to:
 * node.js (install from)
 * gulp (install with npm install -g gulp)
 
-#How to use
+# How to use
 
 * Clone repository 
 * npm install
