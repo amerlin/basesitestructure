@@ -35,4 +35,4 @@ gulp build --env [dev | prod]
 
 # Note
 
-If env is set to "prod" javascript and css are minify, but destination file not have .min suffix.
+If env is set to "prod" javascript and css are minify.
