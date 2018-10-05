@@ -16,6 +16,9 @@
     "typescript": "^2.1.4"
   },
   "dependencies": {
-    "@types/jquery": "^3.3.10"
+    "@types/jquery": "^3.3.10",
+    "gulp-batch-replace": "0.0.0",
+    "gulp-replace": "^1.0.0",
+    "gulp-tap": "^1.0.1"
   }
 }

@@ -13,6 +13,12 @@ var merge = require('merge-stream');
 var del = require('del');
 var replace = require('gulp-replace');
 var rename = require('gulp-rename');
+var tap = require('gulp-tap');
+var replaceAll = require('gulp-batch-replace');
+var path = require('path');
+
+var cssElements = [];
+var jsElements = [];
 
 // config files
 
@@ -82,20 +88,16 @@ gulp.task('sass', function() {
         sourceMappingURLPrefix: env.sass.sourceMaps.externalURLPrefix
       } : null
     )))
-    // .pipe(gulpIf(env.sass.minify, rename(ex)))
     .pipe(gulp.dest(env.sass.outDir));
-    
 });
 
 gulp.task('assets', function() {
   getEnv();
-
   var tasks = env.assets.map(function(assets) {
     return gulp.src(assets.src)
       .pipe(expect(assets.src))
       .pipe(gulp.dest(assets.outDir));
   });
-
   return merge(tasks);
 });
 
@@ -104,20 +106,63 @@ gulp.task('clean', function() {
   return del.sync(env.clean);
 });
 
-gulp.task('jsrefreplace', function(){
-  gulp.src(['./site/dist/index.html'])
-    .pipe(replace('site.js', 'site.min.js'))
-    .pipe(replace('site.css', 'site.min.css'))
-    .pipe(gulp.dest('./site/dist'));
+gulp.task('getCss',function(){
+  getEnv();
+  cssElements = [];
+  return gulp.src('site/dist/css/*.css')
+    .pipe(gulpIf(env.sass.minify , tap(function (file) {
+      var newFileName = path.basename(file.path).trim();
+      var oldFileName = newFileName.includes('.min') ?
+        newFileName.replace('.min', '').trim() :
+        newFileName.substr(0, newFileName.indexOf('.')) + '.min' + newFileName.substr(newFileName.indexOf('.')).trim();
+        cssElements.push([oldFileName, newFileName]);
+    })));
 });
 
-gulp.task('jsminrefreplace', function(){
-  gulp.src(['./site/dist/index.html'])
-    .pipe(replace('site.min.js', 'site.js'))
-    .pipe(replace('site.min.css', 'site.css'))
-    .pipe(gulp.dest('./site/dist'));
+gulp.task('replaceCss',function(){
+  getEnv();
+  return gulp.src('site/dist/index.html')
+    .pipe(gulpIf(env.sass.minify, replaceAll(cssElements)))
+    .pipe(gulpIf(env.sass.minify, gulp.dest('./site/dist')));
 });
 
+gulp.task('fixCss', function(callback){
+  getEnv();
+  runSequence(
+    'getCss',
+    'replaceCss',
+    callback
+  );
+});
+
+gulp.task('getJs',function(){
+  getEnv();
+  jsElements = [];
+  return gulp.src('site/dist/css/*.js')
+    .pipe(gulpIf(env.typescript.minify ,tap(function (file) {
+      var newFileName = path.basename(file.path).trim();
+      var oldFileName = newFileName.includes('.min') ?
+        newFileName.replace('.min', '').trim() :
+        newFileName.substr(0, newFileName.indexOf('.')) + '.min' + newFileName.substr(newFileName.indexOf('.')).trim();
+        jsElements.push([oldFileName, newFileName]);
+    })));
+});
+
+gulp.task('replaceJs',function(){
+  getEnv();
+  return gulp.src('site/dist/index.html')
+  .pipe(gulpIf(env.typescript.minify, replaceAll(jsElements)))
+  .pipe(gulpIf(env.typescript.minify, gulp.dest('./site/dist')));
+});
+
+gulp.task('fixJs', function(callback){
+  getEnv();
+  runSequence(
+    'getJs',
+    'replaceJs',
+    callback
+  );
+});
 
 gulp.task('build', function(callback) {
   getEnv();
@@ -127,6 +172,8 @@ gulp.task('build', function(callback) {
     'ts',
     'sass',
     'assets',
+    'fixJs',
+    'fixCss',
     callback
   );
 });
